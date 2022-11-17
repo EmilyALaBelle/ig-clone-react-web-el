@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "antd"
 import UploadModal from "./UploadModal"
+import Post from "./Post"
 
 export default function Feed() {
   const [photoList, setPhotoList] = useState()
@@ -12,10 +13,12 @@ export default function Feed() {
       .catch(alert)
   }, [setPhotoList])
   return (
-    <section>
+    <section className="photo-feed">
       {!photoList
         ? <p>Loading...</p>
-        : <p>{photoList.length}</p>
+        : photoList.map(post => (
+          <Post post={post} key={post.photoId}/> //first Post refers to the conmponent, second post refers to prop called post in the Post component, The third post refers to what we called the big arrow function above. photoId comes from the api on (line 7) where we refer to the document id
+        ))
       }
     {showUpload ? <UploadModal setPhotoList={setPhotoList} setShowUpload={setShowUpload}/> :null}
       <Button 

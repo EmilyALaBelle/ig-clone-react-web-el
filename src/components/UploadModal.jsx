@@ -20,11 +20,11 @@ export default function UploadModal({ setShowUpload, setPhotoList }) {
     //1. Upload photo to storage bucket
     const filename = values.photo.file.name
     const imageRef = ref(storage, `photos/${filename}`)
-    uploadBytes(imageRef, values.photo.file)
+    uploadBytes(imageRef, values.photo.file.originFileObj)
     .then(() => console.log('upload successful'))
     .catch(err => console.error(err))
     //2. Figure out URL for that photo
-    const photoUrl = `https://firebasestorage.googleapis.com/v0/b/upload-storage-el.appspot.com/o/${filename}?alt=media`
+    const photoUrl = `https://firebasestorage.googleapis.com/v0/b/upload-storage-el.appspot.com/o/photos%2F${filename}?alt=media`
     //3. PUT THAT URL into new photo object
     let newPhotoObj = values
     newPhotoObj.photo = photoUrl
